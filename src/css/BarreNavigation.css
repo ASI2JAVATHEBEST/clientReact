@@ -1,0 +1,9 @@
+.barreNavigation{
+    margin-bottom: 2em;
+    border-bottom: 1px solid black;
+    padding: 2em;
+}
+
+.barreNavigation .card{
+    cursor:pointer
+}

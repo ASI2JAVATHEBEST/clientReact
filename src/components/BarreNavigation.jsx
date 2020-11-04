@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Container, Col,Row} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './../css/BarreNavigation.css'
 
 class BarreNavigation extends Component {
     state = {
