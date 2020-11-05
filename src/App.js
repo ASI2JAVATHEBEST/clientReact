@@ -14,16 +14,20 @@ class App extends Component {
   changeOnglet = (onglet) => {
     // this.setState allows us to update the state value
     if(!this.state.onglets.some(o=> o==onglet)){
+      console.error("onglet inconnu");
       return 
     }
-    this.state.onglet = onglet
+    this.setState({"ongletSelected": onglet})
+    console.log(this.state.ongletSelected);
   }
 
   render() {
+    console.log("render",this.state.ongletSelected);
     return (
       <div className='App'>
-        <BarreNavigation title="HomePage" user={this.state.user} onClickOnglet={changeOnglet}></BarreNavigation>
-        {this.state.ongletSelected=="sell" ? <Sell></Sell> : <Home></Home>}
+        <BarreNavigation title={this.state.ongletSelected} user={this.state.user} ></BarreNavigation>
+        {this.state.ongletSelected=="sell" ? <Sell></Sell> : <Home onClickOnglet={this.changeOnglet}></Home>}
+        {this.state.ongletSelected}
       </div>
     )
   }

@@ -17,7 +17,7 @@ class BarreNavigation extends Component {
               <Container>
                   <Row>
                       <Col cols="2">{this.props.user.money}</Col>
-                      <Col cols="8">{this.state.title}</Col>
+                      <Col cols="8">{this.props.title}</Col>
                       <Col cols="2">{this.props.user.name}</Col>
 
                   </Row>
