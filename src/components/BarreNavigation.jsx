@@ -12,18 +12,34 @@ class BarreNavigation extends Component {
     
       
       render() {
-        return (
-          <div className='barreNavigation'>
-              <Container>
-                  <Row>
-                      <Col cols="2">{this.props.user.money}</Col>
-                      <Col cols="8">{this.props.title}</Col>
-                      <Col cols="2">{this.props.user.name}</Col>
-
-                  </Row>
-              </Container>
-          </div>
-        )
+        if(this.props.user){
+            return (
+                <div className='barreNavigation'>
+                    <Container>
+                        <Row>
+                            <Col cols="2">{this.props.user.money}</Col>
+                            <Col cols="8">{this.props.title}</Col>
+                            <Col cols="2">{this.props.user.name}</Col>
+    
+                        </Row>
+                    </Container>
+                </div>
+            )
+        }
+        else{
+            return (
+                <div className='barreNavigation'>
+                    <Container>
+                        <Row>
+                            <Col cols="2"></Col>
+                            <Col cols="8">{this.props.title}</Col>
+                            <Col cols="2">Se connecter</Col>
+    
+                        </Row>
+                    </Container>
+                </div>
+            )
+        }
     }
 }
 

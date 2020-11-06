@@ -1,45 +1,35 @@
 import React, { Component } from 'react'
-import {Card} from 'react-bootstrap'
+import {Card,ListGroup, ListGroupItem} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import RowCard from "./rowCard.jsx"
 
-class Card extends Component {
-    state = {
-        // state is initialized by a props
-        card:{
-            name:"nom",
-            description:"description",
-            family:"famille",
-            affinity:"affinité",
-            energy:"Energie",
-            hp:"Vie",
-            defence:5,
-            attack:5,
-            price:30.0,
-        },
-    }
+class CardComponent extends Component {
     
       
-      render() {
-        return (
-            <Card>
-                <Card.Body>
-                    <Card.Title>{this.state.card.name}</Card.Title>
-                    <Card.Text>
-                        Description: {this.state.card.description}
-                        Family: {this.state.card.family}
-                        Affinity: {this.state.card.affinity}
-                        Energy: {this.state.card.energy}
-                        HP: {this.state.card.hp}
-                        Defence: {this.state.card.defence}
-                        Attack: {this.state.card.hp}
-                        Price: {this.state.card.price}
-
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        )
+    render() {
+        var card = this.props.card
+        if(card){
+            return (
+                <Card>
+                    <Card.Body>
+                        <Card.Title>{card.name}</Card.Title>
+                        <ListGroup className="list-group-flush">
+                            <ListGroupItem>Family: {card.family}{card.description}</ListGroupItem>
+                            <ListGroupItem>Affinity: {card.affinity}</ListGroupItem>
+                            <ListGroupItem>Energy: {card.energy}</ListGroupItem>
+                            <ListGroupItem>HP: {card.hp}</ListGroupItem>
+                            <ListGroupItem>Defence: {card.defence}</ListGroupItem>
+                            <ListGroupItem>Attack: {card.hp}</ListGroupItem>
+                            <ListGroupItem>Price: {card.price}</ListGroupItem>
+                        </ListGroup>
+                            
+                    </Card.Body>
+                </Card>
+            )
+        }else{
+            return (<div>no card selected</div>)
+        }
     }
 }
 
-export default TableCards
+export default CardComponent

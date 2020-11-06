@@ -6,44 +6,13 @@ import RowCard from "./rowCard.jsx"
 class TableCards extends Component {
     state = {
         // state is initialized by a props
-        cards:[
-            {
-                name:"nom",
-                description:"description",
-                family:"famille",
-                affinity:"affinité",
-                energy:"Energie",
-                hp:"Vie",
-                defence:5,
-                attack:5,
-                price:30.0,
-            },
-            {
-                name:"nom2",
-                description:"description",
-                family:"famille",
-                affinity:"affinité",
-                energy:"Energie",
-                hp:"Vie",
-                defence:5,
-                attack:5,
-                price:30.0,
-            },
-            {
-                name:"nom3",
-                description:"description",
-                family:"famille",
-                affinity:"affinité",
-                energy:"Energie",
-                hp:"Vie",
-                defence:5,
-                attack:5,
-                price:30.0,
-            }
-        ]
+        
       }
     
-      
+      clickRow= (name)=>{
+          console.log("TableCard",name);
+          this.props.clickCard(name)
+      }
       render() {
         return (
             <Table striped bordered hover size="sm">
@@ -61,7 +30,7 @@ class TableCards extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.cards.map(c => <RowCard key={c.name} card={c}></RowCard>)}
+                    {this.props.cards.map(c => <RowCard key={c.name} card={c} onRowClick={this.clickRow}></RowCard>)}
                 </tbody>
             </Table>
         )

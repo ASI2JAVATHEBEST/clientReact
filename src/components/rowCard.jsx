@@ -4,11 +4,13 @@ class RowCard extends Component {
     state = {
         // state is initialized by a props
       }
-    
+      click= ()=>{
+        this.props.onRowClick(this.props.card.name)
+      }
       
       render() {
         return (
-            <tr>
+            <tr onClick={this.click}>
                 <td>{this.props.card.name}</td>
                 <td>{this.props.card.description}</td>
                 <td>{this.props.card.family}</td>
