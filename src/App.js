@@ -8,8 +8,8 @@ import requestHttp from './js/requestHttp.js'
 class App extends Component {
   state = {
     // state is initialized by a props
-    user: {name:"Antoine",money:4000},
-    // user: null,
+    // user: {name:"Antoine",money:4000},
+    user: null,
     onglets: ["home","sell","buy","login"],
     ongletSelected :   "home",
     allCards: [],
@@ -51,14 +51,14 @@ class App extends Component {
         body = <Home onClickOnglet={this.changeOnglet}></Home>
         break
       case "login":
-        body = <Login store={ongletSelected}></Login>
+        body = <Login ></Login>
         break
       default:
         body = (<div>404</div>)
     }
     return (
       <div className='App'>
-        <BarreNavigation title={ongletSelected} user={this.state.user} ></BarreNavigation>
+        <BarreNavigation title={ongletSelected} user={this.state.user} onClickOnglet={this.changeOnglet}></BarreNavigation>
         {body}
       </div>
     )

@@ -1,30 +1,46 @@
 import React, { Component } from 'react'
 import {Form, Button, Container} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import requestHttp from './../js/requestHttp.js'
 
 class Login extends Component {
     state = {
-        // state is initialized by a props
-        
-      }
+        login:{
+            username:"",
+            password:""
+        },
+        signin:{
+            name:"",
+            surname:"",
+            password:"",
+            repassword:""
+        }
+    }
     
-      onClickBuy = (event) => {
-        console.log(event);
-        this.props.onClickOnglet("buy")
-      }
-      onClickSell = (event) => {
-        console.log(event);
-        this.props.onClickOnglet("sell")
-      }
-      onClickPlay = (event) => {
-        console.log(event);
-        this.props.onClickOnglet("play")
-      }
+    clickLogin = async ()=>{
+        try{
+            await requestHttp("POST","user/login/",this.state.login)
+        }catch(e){
+            console.error(e);
+        }
+    }
+    clickSignIn = async ()=>{
+        if(this.state.signin.password != this.state.signin.repassword){
+            return 
+        }
+        try{
+            var data = Object.assign({},this.state.signin)
+            delete data.repassword
+            await requestHttp("POST","user/sigin/", this.data)
+        }catch(e){
+            console.error(e);
+        }
+    }
       render() {
         return (
             <Container>
             
-                <h1>Log In</h1>
+                <h1>Sign In</h1>
                 <Form>
                     <Form.Group controlId="formBasicinput">
                         <Form.Label>Name</Form.Label>
@@ -42,11 +58,11 @@ class Login extends Component {
                         <Form.Label>Re Password</Form.Label>
                         <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
-                    Log In
+                    <Button variant="primary" type="button" onClick={this.clickSignIn}>
+                    Sign In
                     </Button>
                 </Form>
-                <h1>Sign In</h1>
+                <h1>LogIn</h1>
                 <Form>
                     
                     <Form.Group controlId="formBasicinput">
@@ -58,8 +74,8 @@ class Login extends Component {
                         <Form.Control type="password" placeholder="Password" />
                     </Form.Group>
                     
-                    <Button variant="primary" type="submit">
-                    Sign In
+                    <Button variant="primary" type="button" onClick={this.clickLogin}>
+                    LogIn
                     </Button>
                 </Form>
             </Container>

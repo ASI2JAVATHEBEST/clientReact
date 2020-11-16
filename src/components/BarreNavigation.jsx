@@ -9,7 +9,13 @@ class BarreNavigation extends Component {
         title: this.props.title,
         user:this.props.user
       }
-    
+      goHome = () => {
+          console.log("home");
+        this.props.onClickOnglet("home")
+      }
+      goLogin = () => {
+        this.props.onClickOnglet("login")
+      }
       
       render() {
         if(this.props.user){
@@ -18,7 +24,7 @@ class BarreNavigation extends Component {
                     <Container>
                         <Row>
                             <Col cols="2">{this.props.user.money}</Col>
-                            <Col cols="8">{this.props.title}</Col>
+                            <Col cols="8" onClick={this.goHome} >{this.props.title}</Col>
                             <Col cols="2">{this.props.user.name}</Col>
     
                         </Row>
@@ -32,8 +38,8 @@ class BarreNavigation extends Component {
                     <Container>
                         <Row>
                             <Col cols="2"></Col>
-                            <Col cols="8">{this.props.title}</Col>
-                            <Col cols="2">Se connecter</Col>
+                            <Col cols="8" onClick={this.goHome}>{this.props.title}</Col>
+                            <Col cols="2" onClick={this.goLogin}>Se connecter</Col>
     
                         </Row>
                     </Container>
