@@ -5,4 +5,5 @@ const globalReducer = combineReducers({
   user: userReducer,
 })
 
+
 export default globalReducer

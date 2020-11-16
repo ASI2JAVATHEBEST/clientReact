@@ -22,10 +22,12 @@ class InternalSell extends Component {
             await requestHttp("POST","store/sell/"+this.props.user.name+"/"+this.selectedCardName)
             
             //========TEST 
-            this.props.user.money += selectedCard.price
-            var idx = this.props.user.cards.findIndex(c=>c.name == this.state.selectedCardName)
-            this.props.user.cards.splice(idx,1)
-            this.props.updateUser(this.props.user)
+            var user = Object.assign({},this.props.user)
+            user.money += selectedCard.price
+            var idx = user.cards.findIndex(c=>c.name == this.state.selectedCardName)
+            user.cards.splice(idx,1)
+            this.props.updateUser(user)
+            
         }catch(e){
             console.error(e);
         }
@@ -61,8 +63,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
     updateUser: (user) => {
-        console.log("updateUser",user);
-      dispatch(updateUser(user))
+      var res = updateUser(user)
+      console.log("updateUser",res);
+      dispatch(res)
     },
   }
 }

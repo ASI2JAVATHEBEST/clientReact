@@ -60,7 +60,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    
+        updateUser: (user) => {
+            var res = updateUser(user)
+            console.log("updateUser",res);
+            dispatch(res)
+          },
   }
 }
   
