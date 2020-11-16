@@ -1,19 +1,25 @@
 import React, { Component } from 'react'
 import BarreNavigation from './components/BarreNavigation.jsx'
 import Home from './components/home.jsx'
-import Store from './components/store.jsx'
+import Buy from './components/buy.jsx'
+import Sell from './components/sell.jsx'
 import Login from './components/login.jsx'
 import requestHttp from './js/requestHttp.js'
 
-class App extends Component {
+
+import { connect } from 'react-redux'
+import {updateUser} from "./actions"
+
+
+
+class InternalApp extends Component {
   state = {
     // state is initialized by a props
-    // user: {name:"Antoine",money:4000},
-    user: null,
+    
+    
     onglets: ["home","sell","buy","login"],
     ongletSelected :   "home",
     allCards: [],
-    userCards: []
   }
 
   changeOnglet = (onglet) => {
@@ -30,8 +36,8 @@ class App extends Component {
     console.log("mounted");
     (async ()=>{
       this.state.allCards = await requestHttp("GET","api/card/cards")
-      if(this.state.user){
-        this.state.userCards = await requestHttp("GET","api/card/cards")
+      if(this.props.user){
+        this.props.user.cards = await requestHttp("GET","api/card/cards")
       }
     })()
   }
@@ -42,10 +48,10 @@ class App extends Component {
     var body
     switch(ongletSelected){
       case "buy":
-        body = <Store store={ongletSelected} cards={this.state.allCards} username={this.state.user.name}></Store>
+        body = <Buy store={ongletSelected} cards={this.state.allCards} username={this.props.user.name}></Buy>
         break
       case "sell":
-        body = <Store store={ongletSelected} cards={this.state.userCards} username={this.state.user.name}></Store>
+        body = <Sell store={ongletSelected}></Sell>
         break
       case "home":
         body = <Home onClickOnglet={this.changeOnglet}></Home>
@@ -57,11 +63,29 @@ class App extends Component {
         body = (<div>404</div>)
     }
     return (
-      <div className='App'>
-        <BarreNavigation title={ongletSelected} user={this.state.user} onClickOnglet={this.changeOnglet}></BarreNavigation>
-        {body}
-      </div>
+      
+        
+        <div className='App'>
+          <BarreNavigation title={ongletSelected} onClickOnglet={this.changeOnglet}></BarreNavigation>
+          {body}
+        </div>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user.user,
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => {
+      dispatch(updateUser(user))
+    },
+  }
+}
+
+const App = connect(mapStateToProps, mapDispatchToProps)(InternalApp)
+
 export default App

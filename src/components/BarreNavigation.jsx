@@ -3,7 +3,10 @@ import {Container, Col,Row} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './../css/BarreNavigation.css'
 
-class BarreNavigation extends Component {
+import { connect } from 'react-redux'
+import {updateUser} from "./../actions"
+
+class InternalBarreNavigation extends Component {
     state = {
         // state is initialized by a props
         title: this.props.title,
@@ -48,5 +51,20 @@ class BarreNavigation extends Component {
         }
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user.user,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    
+  }
+}
+  
+  
+const BarreNavigation = connect(mapStateToProps, mapDispatchToProps)(InternalBarreNavigation)
 
 export default BarreNavigation
