@@ -18,11 +18,16 @@ class InternalBuy extends Component {
     }
     clickBuyButton= async ()=>{
       try{
+          var selectedCard = this.props.user.cards.find(c=> c.name == this.state.selectedCardName)
           if (this.props.user.cards.some(c=>c.name == this.state.selectedCardName)){
             console.log("carte deja achetée");
             return
           }
-          await requestHttp("POST","store/buy/"+this.props.user.username+"/"+this.state.selectedCardName)
+          await requestHttp("POST","store/buy/",{
+            user_id: this.props.user.id,
+            card_id: selectedCard.cardReference.id
+
+          })
 
 
           var user = await requestHttp("GET","user/user/"+this.props.user.id)

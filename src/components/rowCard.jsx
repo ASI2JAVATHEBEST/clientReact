@@ -11,10 +11,10 @@ class RowCard extends Component {
       render() {
         return (
             <tr onClick={this.click}>
-                <td>{this.props.card.name}</td>
-                <td>{this.props.card.description}</td>
-                <td>{this.props.card.family}</td>
-                <td>{this.props.card.affinity}</td>
+                <td>{this.props.card.cardReference.name}</td>
+                <td>{this.props.card.cardReference.description}</td>
+                <td>{this.props.card.cardReference.family}</td>
+                <td>{this.props.card.cardReference.affinity}</td>
                 <td>{this.props.card.energy}</td>
                 <td>{this.props.card.hp}</td>
                 <td>{this.props.card.defence}</td>

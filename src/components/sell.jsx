@@ -21,7 +21,7 @@ class InternalSell extends Component {
             var selectedCard = this.props.user.cards.find(c=> c.name == this.state.selectedCardName)
             await requestHttp("POST","store/sell/",{
               user_id: this.props.user.id,
-              card_id: selectedCard.id
+              card_id: selectedCard.cardReference.id
 
             })
             var user = await requestHttp("GET","user/user/"+this.props.user.id)

@@ -11,11 +11,12 @@ class CardComponent extends Component {
         if(card){
             return (
                 <Card>
+                    <Card.Img variant="top" src={card.cardReference.imgUrl}/>
                     <Card.Body>
-                        <Card.Title>{card.name}</Card.Title>
+                        <Card.Title>{card.cardReference.name}</Card.Title>
                         <ListGroup className="list-group-flush">
-                            <ListGroupItem>Family: {card.family}{card.description}</ListGroupItem>
-                            <ListGroupItem>Affinity: {card.affinity}</ListGroupItem>
+                            <ListGroupItem>Family: {card.cardReference.family}{card.cardReference.description}</ListGroupItem>
+                            <ListGroupItem>Affinity: {card.cardReference.affinity}</ListGroupItem>
                             <ListGroupItem>Energy: {card.energy}</ListGroupItem>
                             <ListGroupItem>HP: {card.hp}</ListGroupItem>
                             <ListGroupItem>Defence: {card.defence}</ListGroupItem>
