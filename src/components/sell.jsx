@@ -25,7 +25,7 @@ class InternalSell extends Component {
 
             })
             var user = await requestHttp("GET","user/user/"+this.props.user.id)
-            this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
+            this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cardList})
             
         }catch(e){
             console.error(e);

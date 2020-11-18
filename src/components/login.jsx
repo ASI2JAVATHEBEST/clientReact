@@ -28,7 +28,7 @@ class InternalLogin extends Component {
             var idUser = await requestHttp("GET","user/auth?login="+this.state.login.username+"&pwd="+this.state.login.password)
             if(idUser){
                 var user = await requestHttp("GET","user/user/"+idUser)
-                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
+                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cardList})
             }
             console.log(this.state);
         }catch(e){
@@ -46,7 +46,7 @@ class InternalLogin extends Component {
             var id = await requestHttp("POST","user/user/", data)
             if(id){
                 var user = await requestHttp("GET","user/user/"+id)
-                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
+                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cardList})
             }
         }catch(e){
             console.error(e);
