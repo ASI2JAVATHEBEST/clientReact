@@ -35,8 +35,10 @@ class InternalApp extends Component {
   componentDidMount(){
     console.log("mounted");
     (async ()=>{
-      this.state.allCards = await Promise.all(await requestHttp("GET","card/cards_to_sell").map(cardID=>{
-        return await requestHttp("GET","cards/card/"+cardID)
+      this.state.allCards = await Promise.all((await requestHttp("GET","card/cards_to_sell")).map(async cardID=>{
+        var cardData = await requestHttp("GET","card/card/"+cardID)
+		cardData.cardReference = await requestHttp("GET", "card/cardReference/" + cardData.cardReferenceId)
+		return cardData
     }))
       //SI les sessions marchainet
       if(SESSION_USER_ID){

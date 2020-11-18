@@ -20,6 +20,7 @@ async function requestHttp(method,url,body){
                 }
             }
             xml.open(method,url)
+			xml.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xml.send(JSON.stringify(body))
         }catch(e){
             reject(e)

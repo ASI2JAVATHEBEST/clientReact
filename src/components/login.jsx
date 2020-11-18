@@ -28,7 +28,7 @@ class InternalLogin extends Component {
             var idUser = await requestHttp("GET","user/auth?login="+this.state.login.username+"&pwd="+this.state.login.password)
             if(idUser){
                 
-                this.props.updateUser(loadUser(idUser))
+                this.props.updateUser(await loadUser(idUser))
             }
             console.log(this.state);
         }catch(e){
@@ -45,7 +45,7 @@ class InternalLogin extends Component {
             delete data.repwd
             var id = await requestHttp("POST","user/user/", data)
             if(id){
-                this.props.updateUser(loadUser(id))
+                this.props.updateUser(await loadUser(id))
             }
         }catch(e){
             console.error(e);

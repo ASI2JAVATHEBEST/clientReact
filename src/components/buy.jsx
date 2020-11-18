@@ -11,36 +11,43 @@ import {updateUser} from "../actions"
 class InternalBuy extends Component {
     state = {
         // state is initialized by a props
-		    selectedCardName:null
+		    selectedCardName:null,
+			allCards: []
     }
-    clickCard= (nameCard)=>{
-      this.setState({selectedCardName : nameCard})
+    clickCard= (idCard)=>{
+      this.setState({selectedCardName : idCard})
     }
     clickBuyButton= async ()=>{
       try{
-          var selectedCard = this.props.user.cards.find(c=> c.name == this.state.selectedCardName)
-          if (this.props.user.cards.some(c=>c.name == this.state.selectedCardName)){
-            console.log("carte deja achetée");
-            return
-          }
+          var selectedCard = this.state.allCards.find(c=> c.id == this.state.selectedCardName)
           await requestHttp("POST","store/buy/",{
             user_id: this.props.user.id,
-            card_id: selectedCard.cardReference.id
-
+            card_id: selectedCard.id
           })
-          this.props.updateUser(loadUser(this.props.user.id))
-
+          this.props.updateUser(await loadUser(this.props.user.id))
+		  this.componentDidMount()
         }catch(e){
           console.error(e);
       }
     }
+    componentDidMount(){
+	  console.log("mounted");
+	  (async ()=>{
+	    this.setState({ allCards: await Promise.all((await requestHttp("GET","card/cards_to_sell")).map(async cardID=>{
+		  var cardData = await requestHttp("GET","card/card/"+cardID)
+		  cardData.cardReference = await requestHttp("GET", "card/cardReference/" + cardData.cardReferenceId)
+		  return cardData
+		})
+		)})
+	  })()
+    }
     render() {
-		  var selectedCard = this.props.cards.find(c => c.name == this.state.selectedCardName)
+	  var selectedCard = this.state.allCards.find(c => c.id == this.state.selectedCardName)
       return (
         <Container>
           <Row>
               <Col cols="8">
-                  <TableCards cards={this.props.cards} clickCard={this.clickCard}></TableCards>
+                  <TableCards cards={this.state.allCards} clickCard={this.clickCard}></TableCards>
               </Col>
               <Col cols="4">
                 <CardComponent card={selectedCard}></CardComponent>

@@ -5,7 +5,7 @@ class RowCard extends Component {
         // state is initialized by a props
       }
       click= ()=>{
-        this.props.onRowClick(this.props.card.name)
+        this.props.onRowClick(this.props.card.id)
       }
       
       render() {
