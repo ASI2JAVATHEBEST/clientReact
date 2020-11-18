@@ -25,7 +25,7 @@ class InternalLogin extends Component {
     
     clickLogin = async ()=>{
         try{
-            var idUser = await requestHttp("POST","user/auth?login="+this.state.login.username+"&pwd?"+this.state.login.password)
+            var idUser = await requestHttp("GET","user/auth?login="+this.state.login.username+"&pwd="+this.state.login.password)
             if(idUser){
                 var user = await requestHttp("GET","user/user/"+idUser)
                 this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
