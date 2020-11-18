@@ -4,10 +4,14 @@ async function requestHttp(method,url,body){
             
             var xml = new XMLHttpRequest()
             xml.onload = function(){
-                resolve(this.responseText)
+                try{
+                    resolve(JSON.parse(this.responseText))
+                }catch(e){
+                    resolve(this.responseText)
+                }
             }
             xml.open(method,url)
-            xml.send(body)
+            xml.send(JSON.stringify(body))
         }catch(e){
             reject(e)
         }

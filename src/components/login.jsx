@@ -37,12 +37,13 @@ class InternalLogin extends Component {
     }
     clickSignIn = async ()=>{
         if(this.state.signin.pwd != this.state.signin.repwd){
+            console.error("mdp différent")
             return 
         }
         try{
             var data = Object.assign({},this.state.signin)
             delete data.repwd
-            var id = await requestHttp("POST","user/user/", this.data)
+            var id = await requestHttp("POST","user/user/", data)
             if(id){
                 var user = await requestHttp("GET","user/user/"+id)
                 this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
@@ -64,27 +65,27 @@ class InternalLogin extends Component {
                 <Form>
                     <Form.Group controlId="formBasicinput">
                         <Form.Label>Login</Form.Label>
-                        <Form.Control type="text" placeholder="Login" onChange={(event)=>{this.handleChange("login","login",event)}}/>
+                        <Form.Control type="text" placeholder="Login" onChange={(event)=>{this.handleChange("signin","login",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicinput">
-                        <Form.Label>FirstName</Form.Label>
-                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("login","firstName",event)}}/>
+                        <Form.Label>LastName</Form.Label>
+                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("signin","lastName",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicinput">
                         <Form.Label>Surname</Form.Label>
-                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("login","surName",event)}}/>
+                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("signin","surName",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicinput">
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="text" placeholder="Email" onChange={(event)=>{this.handleChange("login","email",event)}}/>
+                        <Form.Control type="mail" placeholder="Email" onChange={(event)=>{this.handleChange("signin","email",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={(event)=>{this.handleChange("login","password",event)}}/>
+                        <Form.Control type="password" placeholder="Password" onChange={(event)=>{this.handleChange("signin","pwd",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Re Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={(event)=>{this.handleChange("login","repassword",event)}}/>
+                        <Form.Control type="password" placeholder="Password" onChange={(event)=>{this.handleChange("signin","repwd",event)}}/>
                     </Form.Group>
                     <Button variant="primary" type="button" onClick={this.clickSignIn}>
                     Sign In
