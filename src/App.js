@@ -35,7 +35,7 @@ class InternalApp extends Component {
   componentDidMount(){
     console.log("mounted");
     (async ()=>{
-      this.state.allCards = await requestHttp("GET","api/card/cards")
+      this.state.allCards = await requestHttp("GET","card/cards")
       //SI les sessions marchainet
       if(SESSION_USER_ID){
         var user = await requestHttp("GET","user/user/"+SESSION_USER_ID)
