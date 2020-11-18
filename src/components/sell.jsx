@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import TableCards from "./TableCards.jsx"
 import CardComponent from "./Card.jsx"
 import requestHttp from './../js/requestHttp.js'
-
+import loadUser from './../js/loadUser.js'
 import { connect } from 'react-redux'
 import {updateUser} from "./../actions"
 
@@ -24,8 +24,7 @@ class InternalSell extends Component {
               card_id: selectedCard.cardReference.id
 
             })
-            var user = await requestHttp("GET","user/user/"+this.props.user.id)
-            this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cardList})
+            this.props.updateUser(loadUser(this.props.user.id))
             
         }catch(e){
             console.error(e);
