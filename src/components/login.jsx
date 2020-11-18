@@ -13,31 +13,40 @@ class InternalLogin extends Component {
             password:""
         },
         signin:{
-            username:"",
-            surname:"",
-            password:"",
-            repassword:""
+            login:"",
+            pwd:"",
+            repwd:"",
+            account:400,
+            lastName:"",
+            surName:"",
+            email:""
         }
     }
     
     clickLogin = async ()=>{
         try{
-            await requestHttp("POST","user/login/",this.state.login)
+            var idUser = await requestHttp("POST","user/auth?login="+this.state.login.username+"&pwd?"+this.state.login.password)
+            if(idUser){
+                var user = await requestHttp("GET","user/user/"+idUser)
+                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
+            }
             console.log(this.state);
-            this.props.updateUser({name:this.state.login.username,money:4000,cards:await requestHttp("GET","api/card/cards")})
         }catch(e){
             console.error(e);
         }
     }
     clickSignIn = async ()=>{
-        if(this.state.signin.password != this.state.signin.repassword){
+        if(this.state.signin.pwd != this.state.signin.repwd){
             return 
         }
         try{
             var data = Object.assign({},this.state.signin)
-            delete data.repassword
-            await requestHttp("POST","user/sigin/", this.data)
-            this.props.updateUser({name:this.state.signin.username,money:4000,cards:await requestHttp("GET","api/card/cards")})
+            delete data.repwd
+            var id = await requestHttp("POST","user/user/", this.data)
+            if(id){
+                var user = await requestHttp("GET","user/user/"+id)
+                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
+            }
         }catch(e){
             console.error(e);
         }
@@ -54,12 +63,20 @@ class InternalLogin extends Component {
                 <h1>Sign In</h1>
                 <Form>
                     <Form.Group controlId="formBasicinput">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" placeholder="Name" onChange={(event)=>{this.handleChange("login","name",event)}}/>
+                        <Form.Label>Login</Form.Label>
+                        <Form.Control type="text" placeholder="Login" onChange={(event)=>{this.handleChange("login","login",event)}}/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicinput">
+                        <Form.Label>FirstName</Form.Label>
+                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("login","firstName",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicinput">
                         <Form.Label>Surname</Form.Label>
-                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("login","username",event)}}/>
+                        <Form.Control type="text" placeholder="Surname" onChange={(event)=>{this.handleChange("login","surName",event)}}/>
+                    </Form.Group>
+                    <Form.Group controlId="formBasicinput">
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control type="text" placeholder="Email" onChange={(event)=>{this.handleChange("login","email",event)}}/>
                     </Form.Group>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>

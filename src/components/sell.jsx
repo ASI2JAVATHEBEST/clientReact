@@ -19,14 +19,13 @@ class InternalSell extends Component {
     clickSellButton= async ()=>{
         try{
             var selectedCard = this.props.user.cards.find(c=> c.name == this.state.selectedCardName)
-            await requestHttp("POST","store/sell/"+this.props.user.name+"/"+this.selectedCardName)
-            
-            //========TEST 
-            var user = Object.assign({},this.props.user)
-            user.money += selectedCard.price
-            var idx = user.cards.findIndex(c=>c.name == this.state.selectedCardName)
-            user.cards.splice(idx,1)
-            this.props.updateUser(user)
+            await requestHttp("POST","store/sell/",{
+              user_id: this.props.user.id,
+              card_id: selectedCard.id
+
+            })
+            var user = await requestHttp("GET","user/user/"+this.props.user.id)
+            this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
             
         }catch(e){
             console.error(e);

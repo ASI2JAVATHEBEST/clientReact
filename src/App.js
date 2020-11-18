@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import {updateUser} from "./actions"
 
 
-
+const SESSION_USER_ID = null
 class InternalApp extends Component {
   state = {
     // state is initialized by a props
@@ -36,8 +36,10 @@ class InternalApp extends Component {
     console.log("mounted");
     (async ()=>{
       this.state.allCards = await requestHttp("GET","api/card/cards")
-      if(this.props.user){
-        this.props.user.cards = await requestHttp("GET","api/card/cards")
+      //SI les sessions marchainet
+      if(SESSION_USER_ID){
+        var user = await requestHttp("GET","user/user/"+SESSION_USER_ID)
+        this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
       }
     })()
   }

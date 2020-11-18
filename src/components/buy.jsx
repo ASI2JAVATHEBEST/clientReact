@@ -23,11 +23,10 @@ class InternalBuy extends Component {
             return
           }
           await requestHttp("POST","store/buy/"+this.props.user.username+"/"+this.state.selectedCardName)
-          //========TEST 
-          var selectedCard = this.props.cards.find(c => c.name == this.state.selectedCardName)
-          this.props.user.money -= selectedCard.price
-          this.props.user.cards.push(selectedCard)
-          this.props.updateUser(this.props.user)
+
+
+          var user = await requestHttp("GET","user/user/"+this.props.user.id)
+          this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cards})
         
         }catch(e){
           console.error(e);
