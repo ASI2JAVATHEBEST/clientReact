@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Form, Button, Container} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import requestHttp from './../js/requestHttp.js'
-
+import loadUser from './../js/loadUser.js'
 import { connect } from 'react-redux'
 import {updateUser} from "./../actions"
 
@@ -27,8 +27,8 @@ class InternalLogin extends Component {
         try{
             var idUser = await requestHttp("GET","user/auth?login="+this.state.login.username+"&pwd="+this.state.login.password)
             if(idUser){
-                var user = await requestHttp("GET","user/user/"+idUser)
-                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cardList})
+                
+                this.props.updateUser(loadUser(idUser))
             }
             console.log(this.state);
         }catch(e){
@@ -45,8 +45,7 @@ class InternalLogin extends Component {
             delete data.repwd
             var id = await requestHttp("POST","user/user/", data)
             if(id){
-                var user = await requestHttp("GET","user/user/"+id)
-                this.props.updateUser({id:user.id, name:user.login,money:user.account,cards:user.cardList})
+                this.props.updateUser(loadUser(id))
             }
         }catch(e){
             console.error(e);
