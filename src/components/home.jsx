@@ -49,7 +49,7 @@ class Home extends Component {
                         <Card.Body>
                             <Card.Title>Play</Card.Title>
                             <Card.Text>
-                                not implemented
+                                Jouer contre d'autres joueurs
                             </Card.Text>
                         </Card.Body>
                     </Card>
