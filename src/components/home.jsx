@@ -18,7 +18,7 @@ class Home extends Component {
       }
       onClickPlay = (event) => {
         console.log(event);
-        this.props.onClickOnglet("play")
+        window.open("localhost:3000")
       }
       render() {
         return (
