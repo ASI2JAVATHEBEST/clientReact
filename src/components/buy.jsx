@@ -35,7 +35,7 @@ class InternalBuy extends Component {
 	  (async ()=>{
 	    this.setState({ allCards: await Promise.all((await requestHttp("GET","card/cards_to_sell")).map(async cardID=>{
 		  var cardData = await requestHttp("GET","card/card/"+cardID)
-		  cardData.cardReference = await requestHttp("GET", "card/cardReference/" + cardData.cardReferenceId)
+		  // cardData.cardReference = await requestHttp("GET", "card/cardReference/" + cardData.cardReferenceId)
 		  return cardData
 		})
 		)})
